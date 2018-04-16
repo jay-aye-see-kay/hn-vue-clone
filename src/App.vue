@@ -68,4 +68,7 @@ a.router-link-exact-active {
 .site-title {
   font-size: 1.5rem;
 }
+.card {
+  margin-bottom: 5px;
+}
 </style>
