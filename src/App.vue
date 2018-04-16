@@ -71,4 +71,7 @@ a.router-link-exact-active {
 .card {
   margin-bottom: 5px;
 }
+.card.comment {
+    margin-left: 15px;
+}
 </style>

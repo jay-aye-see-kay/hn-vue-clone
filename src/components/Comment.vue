@@ -1,8 +1,8 @@
 <template>
-    <div class="comment">
-        {{ text }}
-        <br>
-        <br>
+    <div class="card comment">
+        <div class="card-body">
+            <span class="comment-text" v-html="text"></span>
+        </div>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
             type: '',
         }
     },
-    props: ['commentId'],
+    props: ['commentId', 'parentId'],
     mounted() {
         this.getComment()
     },

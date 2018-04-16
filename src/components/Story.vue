@@ -10,16 +10,20 @@
                 <span class="by">{{ by }}</span>
                 <span class="time-since">{{ timeSince }} ago</span>
             </div>
-        </div>
-        <div class="card-footer text-center">
-            Comments: {{ numKids }}({{ descendants }})
-        </div>
-        <div class="comments">
-            <Comment 
-                v-for="commentId in kids"
-                v-bind:key="commentId"
-                v-bind:commentId="commentId">
-            </Comment>
+        
+            <button class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${storyid}`" aria-expanded="false" aria-controls="collapseExample">
+                View all {{ numKids }} comments ({{ descendants }} total replys)
+            </button>
+
+            <div class="comments collapse" v-bind:id="`comment-block-${storyid}`">
+                <Comment
+                    v-for="commentId in kids"
+                    v-bind:key="commentId"
+                    v-bind:commentId="commentId"
+                    v-bind:parentId="storyid">
+                </Comment>
+            </div>
+            
         </div>
     </article>
 
