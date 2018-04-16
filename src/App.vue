@@ -1,34 +1,32 @@
 <template>
-  <div>
+
+  <div class="container container-narrow">
     <!-- header and navigation -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a href="/">Yet another HN clone</a>
+    <div class="header bg-orange">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <h1 class="site-title">
+          <a class="nav-link" to="/">Hacker News</a>
+        </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div class="navbar-menu">
-          <div class="navbar-start"></div>
-
-          <div class="navbar-end">
-            <router-link class="navbar-item" to="/">
-              Top
-            </router-link>
-            <router-link class="navbar-item" to="/new">
-              New
-            </router-link>
-            <router-link class="navbar-item" to="/best">
-              Best
-            </router-link>
-          </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            
+            <li class="nav-item">
+              <router-link class="nav-link" to="/">Top</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/new">New</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/best">Best</router-link>
+            </li>
+          </ul>
         </div>
-
-    </nav>
+      </nav>
+    </div>
 
     <!-- the page view etc -->
     <div id="app">
@@ -54,9 +52,20 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-.navbar {
+.container-narrow {
   max-width: 1000px;
   margin: 0 auto;
 }
-h1 {color:red}
+.bg-orange {
+  background-color: #ff6600;
+}
+a.nav-link {
+    padding: 5px 10px;
+}
+a.router-link-exact-active {
+    border-bottom: 2px solid black;
+}
+.site-title {
+  font-size: 1.5rem;
+}
 </style>

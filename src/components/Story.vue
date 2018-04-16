@@ -1,14 +1,12 @@
 <template>
 
-    <article class="media">
-        <div class="media-content">
-            <div class="content">
-                <p>
-                    <strong><a target="_blank" v-bind:href="url">{{ title }}</a></strong> <small>@{{ by }}</small> <small class="is-pulled-right">{{ readableDate }}</small>
-                    <br>
-                    Comments: {{ numKids }}({{ descendants }}) <span class="is-pulled-right">Score: {{ score }}</span>
-                </p>
-            </div>
+    <article class="card">
+        <div class="card-body">
+            <p>
+                <strong><a target="_blank" v-bind:href="url">{{ title }}</a></strong> <small>@{{ by }}</small> <small class="is-pulled-right">{{ readableDate }}</small>
+                <br>
+                Comments: {{ numKids }}({{ descendants }}) <span class="is-pulled-right">Score: {{ score }}</span>
+            </p>
         </div>
     </article>
 
@@ -36,12 +34,8 @@ export default {
     mounted() {
         this.getStory()
     },
-    updated() {
-        this.getStory()
-    },
     watch: {
         storyid: function(newVal, oldVal) {
-            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
             this.getStory()
         }
     },
