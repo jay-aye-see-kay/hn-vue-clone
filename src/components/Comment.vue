@@ -1,15 +1,34 @@
 <template>
     <div class="card comment">
         <div class="card-body">
+            <span class="by">by {{ by }}</span>
+            <span class="comment-time">{{ timeSince }} ago</span>
+            <br>
             <span class="comment-text" v-html="text"></span>
+
+            <button class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${commentId}`" aria-expanded="false" aria-controls="collapseExample">
+                View {{ numKids }} replys
+            </button>
+
+            <div class="comments collapse" v-bind:id="`comment-block-${commentId}`">
+                <Comment
+                    v-for="commentId in kids"
+                    v-bind:key="commentId"
+                    v-bind:commentId="commentId"
+                    v-bind:parentId="commentId">
+                </Comment>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script>
+// import Comment from './Comment.vue'
 import axios from 'axios'
 
 export default {
+    name: 'Comment',
     data() {
         return {
             text: '',
