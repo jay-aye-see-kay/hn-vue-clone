@@ -6,7 +6,29 @@ Vue.use(Router)
 
 export default new Router({
     routes: [{
-        path: '/',
-        component: List
-    }, ]
+            path: '/',
+            name: 'list',
+            component: List,
+            props: {
+                orderby: 'topstories'
+            }
+        },
+        {
+            path: '/new',
+            name: 'list',
+            component: List,
+            props: {
+                orderby: 'newstories'
+            }
+        },
+        {
+            path: '/best',
+            name: 'list',
+            component: List,
+            props: {
+                orderby: 'beststories'
+            }
+        },
+
+    ]
 })

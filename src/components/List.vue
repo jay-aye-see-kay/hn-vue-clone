@@ -15,9 +15,11 @@ import Story from './Story.vue'
 import axios from 'axios'
 
 export default {
+    name: 'list',
     components: {
         Story,
     },
+    props: ['orderby'],
     data() {
         return {
             firstStoryNum: 0,
@@ -29,15 +31,16 @@ export default {
     },
     mounted() {
         // get the current story ids (which updates the stories on completion)
-        this.fetchStoryIds();
+        this.fetchStoryIds(this.orderby);
+    },
+    watch: {
+        orderby: function() {
+            this.fetchStoryIds(this.orderby);
+        }
     },
     methods: {
-        fetchStoryIds(type) {
-            if (type === 'new') { type = 'newstories'} 
-            else if (type === 'best') { type = 'beststories'} 
-            else { type = 'topstories'}
-
-            axios.get(`https://hacker-news.firebaseio.com/v0/${type}.json`)
+        fetchStoryIds(orderby) {
+            axios.get(`https://hacker-news.firebaseio.com/v0/${orderby}.json`)
                 .then(function(response) {
                     // on completion save story ids and update current story ids
                     this.allStoryIds = response.data
@@ -60,7 +63,5 @@ export default {
 </script>
 
 <style scoped>
-    .story-content {
-        font-family: monospace;
-    }
+
 </style>

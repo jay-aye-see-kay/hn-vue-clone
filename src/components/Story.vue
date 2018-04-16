@@ -4,7 +4,7 @@
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong><a v-bind:href="url">{{ title }}</a></strong> <small>@{{ by }}</small> <small class="is-pulled-right">{{ readableDate }}</small>
+                    <strong><a target="_blank" v-bind:href="url">{{ title }}</a></strong> <small>@{{ by }}</small> <small class="is-pulled-right">{{ readableDate }}</small>
                     <br>
                     Comments: {{ numKids }}({{ descendants }}) <span class="is-pulled-right">Score: {{ score }}</span>
                 </p>
@@ -34,7 +34,34 @@ export default {
     },
     props: ['storynum', 'storyid'],
     mounted() {
-        axios.get(`https://hacker-news.firebaseio.com/v0/item/${this.storyid}.json`)
+        this.getStory()
+    },
+    updated() {
+        this.getStory()
+    },
+    watch: {
+        storyid: function(newVal, oldVal) {
+            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+            this.getStory()
+        }
+    },
+    computed: {
+        readableDate() {
+            var d = new Date(this.time * 1000)
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var year = d.getFullYear();
+            var month = months[d.getMonth()];
+            var date = d.getDate();
+            var hour = d.getHours();
+            var min = d.getMinutes();
+            var sec = d.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+            return `${date} ${month} ${year} - ${hour}:${min}:${sec}`
+        }
+    },
+    methods: {
+        getStory() {
+            axios.get(`https://hacker-news.firebaseio.com/v0/item/${this.storyid}.json`)
             .then(function(response) {
                 // update story details
                 this.title = response.data.title
@@ -49,19 +76,6 @@ export default {
                 this.numKids = this.kids.length
             }.bind(this))
             .catch(function (error) { console.log(error) })
-    },
-    computed: {
-        readableDate() {
-            var d = new Date(this.time * 1000)
-            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-            var year = d.getFullYear();
-            var month = months[d.getMonth()];
-            var date = d.getDate();
-            var hour = d.getHours();
-            var min = d.getMinutes();
-            var sec = d.getSeconds();
-            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-            return `${date} ${month} ${year} - ${hour}:${min}:${sec}`
         }
     }
 }

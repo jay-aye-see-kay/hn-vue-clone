@@ -3,7 +3,7 @@
     <!-- header and navigation -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <h1>Yet another HN clone</h1>
+        <a href="/">Yet another HN clone</a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
           <span aria-hidden="true"></span>
@@ -16,15 +16,15 @@
           <div class="navbar-start"></div>
 
           <div class="navbar-end">
-            <a class="navbar-item">
+            <router-link class="navbar-item" to="/">
               Top
-            </a>
-            <a class="navbar-item">
+            </router-link>
+            <router-link class="navbar-item" to="/new">
               New
-            </a>
-            <a class="navbar-item">
+            </router-link>
+            <router-link class="navbar-item" to="/best">
               Best
-            </a>
+            </router-link>
           </div>
         </div>
 
@@ -58,4 +58,5 @@ export default {
   max-width: 1000px;
   margin: 0 auto;
 }
+h1 {color:red}
 </style>
