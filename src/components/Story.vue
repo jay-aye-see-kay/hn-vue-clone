@@ -33,6 +33,14 @@
 <script>
 import Comment from './Comment.vue'
 import axios from 'axios'
+import { cacheAdapterEnhancer } from 'axios-extensions';
+
+// enable cache for axios (see: https://github.com/kuitos/axios-extensions)
+const cachedAxios = axios.create({
+	baseURL: '/',
+	headers: { 'Cache-Control': 'no-cache' },
+	adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
+});
 
 export default {
     name: 'story',
@@ -106,7 +114,7 @@ export default {
     },
     methods: {
         getStory() {
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${this.storyid}.json`)
+            cachedAxios.get(`https://hacker-news.firebaseio.com/v0/item/${this.storyid}.json`)
             .then(function(response) {
                 // update story details
                 this.title = response.data.title

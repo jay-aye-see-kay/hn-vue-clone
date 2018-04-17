@@ -26,6 +26,14 @@
 <script>
 // import Comment from './Comment.vue'
 import axios from 'axios'
+import { cacheAdapterEnhancer } from 'axios-extensions';
+
+// enable cache for axios (see: https://github.com/kuitos/axios-extensions)
+const cachedAxios = axios.create({
+	baseURL: '/',
+	headers: { 'Cache-Control': 'no-cache' },
+	adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
+});
 
 export default {
     name: 'Comment',
@@ -77,7 +85,7 @@ export default {
     },
     methods: {
         getComment() {
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${this.commentId}.json`)
+            cachedAxios.get(`https://hacker-news.firebaseio.com/v0/item/${this.commentId}.json`)
             .then(function(response) {
                 // update comment details
                 this.text = response.data.text

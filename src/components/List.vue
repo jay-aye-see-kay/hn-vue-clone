@@ -13,6 +13,14 @@
 <script>
 import Story from './Story.vue'
 import axios from 'axios'
+import { cacheAdapterEnhancer } from 'axios-extensions';
+
+// enable cache for axios (see: https://github.com/kuitos/axios-extensions)
+const cachedAxios = axios.create({
+	baseURL: '/',
+	headers: { 'Cache-Control': 'no-cache' },
+	adapter: cacheAdapterEnhancer(axios.defaults.adapter, true)
+});
 
 export default {
     name: 'list',
@@ -40,7 +48,7 @@ export default {
     },
     methods: {
         fetchStoryIds(orderby) {
-            axios.get(`https://hacker-news.firebaseio.com/v0/${orderby}.json`)
+            cachedAxios.get(`https://hacker-news.firebaseio.com/v0/${orderby}.json`)
                 .then(function(response) {
                     // on completion save story ids and update current story ids
                     this.allStoryIds = response.data
