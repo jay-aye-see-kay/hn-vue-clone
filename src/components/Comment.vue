@@ -6,8 +6,8 @@
             <br>
             <span class="comment-text" v-html="text"></span>
 
-            <button class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${commentId}`" aria-expanded="false" aria-controls="collapseExample">
-                View {{ numKids }} replys
+            <button v-on:click="viewComments = true" class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${commentId}`" aria-expanded="false" aria-controls="collapseExample">
+                View {{ numKids }} replies
             </button>
 
             <div class="comments collapse" v-bind:id="`comment-block-${commentId}`">
@@ -15,7 +15,8 @@
                     v-for="commentId in kids"
                     v-bind:key="commentId"
                     v-bind:commentId="commentId"
-                    v-bind:parentId="commentId">
+                    v-bind:parentId="commentId"
+                    v-bind:getReplies="viewComments">
                 </Comment>
             </div>
 
@@ -45,14 +46,18 @@ export default {
             kids: [],
             numKids: 0,
             type: '',
+            viewComments: false,
         }
     },
-    props: ['commentId', 'parentId'],
-    mounted() {
-        this.getComment()
-    },
+    props: ['commentId', 'parentId', 'getReplies'],
+    // mounted() {
+    //     this.getComment()
+    // },
     watch: {
         commentId: function() {
+            this.getComment()
+        },
+        getReplies: function() {
             this.getComment()
         }
     },
@@ -91,9 +96,10 @@ export default {
                 this.text = response.data.text
                 this.by = response.data.by
                 this.time =response.data.time
-                this.kids = response.data.kids
                 this.type = response.data.type
-
+                
+                // only get replies if comment is active
+                this.kids = response.data.kids
                 this.numKids = this.kids.length
             }.bind(this))
             .catch(function (error) { console.log(error) })

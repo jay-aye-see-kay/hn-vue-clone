@@ -11,8 +11,8 @@
                 <span class="time-since">{{ timeSince }} ago</span>
             </div>
         
-            <button class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${storyid}`" aria-expanded="false" aria-controls="collapseExample">
-                View all {{ numKids }} comments ({{ descendants }} total replys)
+            <button v-on:click="viewComments = true" class="" type="button" data-toggle="collapse" v-bind:data-target="`#comment-block-${storyid}`" aria-expanded="false" aria-controls="collapseExample">
+                View all {{ numKids }} comments ({{ descendants }} total replies)
             </button>
 
             <div class="comments collapse" v-bind:id="`comment-block-${storyid}`">
@@ -20,7 +20,8 @@
                     v-for="commentId in kids"
                     v-bind:key="commentId"
                     v-bind:commentId="commentId"
-                    v-bind:parentId="storyid">
+                    v-bind:parentId="storyid"
+                    v-bind:getReplies="viewComments">
                 </Comment>
             </div>
             
@@ -58,6 +59,7 @@ export default {
             numKids: 0,
             score: 0,
             type: '',
+            viewComments: false,
         }
     },
     props: ['storynum', 'storyid'],
@@ -96,6 +98,8 @@ export default {
             return Math.floor(seconds) + " seconds";
         },
         extractedHostname() {
+            // only calculate hostname if url != null
+            if (!this.url) { return null }
             var hostname;
             var url = this.url
             //find & remove protocol (http, ftp, etc.) and get hostname
